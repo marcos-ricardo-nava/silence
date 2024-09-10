@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  silence-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: silence:latest
+    container_name: silence
+    command:
+      - sh
+      - -c
+      - |
+        python src/manage.py migrate                
+        python src/manage.py runserver 0.0.0.0:8000 --nothreading --noreload 
+    networks: [ls]    
+    ports: ["8000:8000"]    
+    volumes: [".:/opt/app"]
+
+networks:
+    ls:
+      name: ls
