@@ -1,0 +1,6 @@
+#!/bin/sh
+
+eval $(ssh-agent -s)
+sudo chmod 400 silence-project-key-pair-20240918.pem
+ssh-add silence-project-key-pair-20240918.pem
+ssh ubuntu@3.146.255.221

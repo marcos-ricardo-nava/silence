@@ -21,11 +21,7 @@ RUN apt-get update && \
     apt-get autoremove && \
     apt-get autoclean -y
 
-
-COPY zscaler.local.crt /usr/local/share/ca-certificates/
-RUN update-ca-certificates --fresh
-
-COPY pip.local.conf /etc/pip.conf
+COPY pip.conf /etc/pip.conf
 
 RUN python -m venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
@@ -77,9 +73,6 @@ RUN apt-get update && \
     apt-get autoremove && \
     apt-get autoclean -y
 
-COPY zscaler.local.crt /usr/local/share/ca-certificates/
-RUN update-ca-certificates --fresh
-
 WORKDIR ${APPLICATIONDIR}
 
 # FIX LOCALE
@@ -89,7 +82,7 @@ RUN sed -i -e 's/# pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen && \
     update-locale LANG=${LOCALE}
 
 # PYTHON ENVIRONMENT
-COPY pip.local.conf /etc/pip.conf
+COPY pip.conf /etc/pip.conf
 COPY --from=build-image ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
