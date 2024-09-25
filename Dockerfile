@@ -90,4 +90,6 @@ RUN pip install --upgrade pip && pip install pip-system-certs
 
 COPY . ${APPLICATIONDIR}
 
-CMD ["python", "src/manage.py", "runserver 0.0.0.0:8000", "--nothreading",  "--noreload"]
+EXPOSE 8000
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
